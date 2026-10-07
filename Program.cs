@@ -11,27 +11,29 @@ namespace Rock_paper_scissors
         {
             // functions
 
-            // this function changes the background and foreground colours of the selected menu item
+            // changes the background and foreground colours of the selected menu item
             void ItemSelectColours()
-            // this function changes the background and foreground colours of the selected menu item
             {
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
                 Console.ForegroundColor = ConsoleColor.Black;
             }
 
-            // this function displays the menu items from a string array and selected index and highlights the selected item
+            // displays the menu items from a string array and selected index and highlights the selected item
             void DisplayMenu(string[] menuArray, int selectedIndex)
-            // this function displays the menu items from a string array and selected index and highlights the selected item
             {
-                for (int counter = 0; counter < menuArray.Length; counter++)
+                // variables
+                int counter;
+
+                // this for loop iterates through the menu items and displays them, highlighting the selected item
+                for (counter = 0; counter < menuArray.Length; counter++)
                 {  //this happens before the menu item is printed             
-                    if (counter == selectedIndex)
+                    if (counter == selectedIndex) // if the counter is equal to the selected index, change the background and foreground colours of the selected menu item
                     {
                         ItemSelectColours();
                     }
-                    Console.Write("  "); //writing the menu item
+                    Console.Write("  "); //writing the menu item selected by the user with a space before it for formatting
                     Console.Write(menuArray[counter]);
-                    // this happens after the menu item is printed
+                    // this happens after the menu item is printed, printing a space after the selected item and resetting the colours to default
                     if (counter == selectedIndex)
                     {
                         Console.Write(" ");
@@ -42,9 +44,8 @@ namespace Rock_paper_scissors
 
             }
 
-            // this function allows the user to navigate the menu using W and S keys and returns the new selected index and isMenu boolean
+            // allows the user to navigate the menu using W and S keys and returns the new selected index and isMenu boolean for menu navigation
             (int, bool) MenuNav(int selectedIndex, string[] menuArray, bool isMenu)
-            // this TUPLE function changes selected index based on user input and returns the new selected index for menu navigation
             {
                 // uses the key pressed not the character
                 ConsoleKey userInput = Console.ReadKey(true).Key;
@@ -52,7 +53,7 @@ namespace Rock_paper_scissors
                 // switch statement to handle user input for menu navigation
                 switch (userInput)
                 {
-                    case ConsoleKey.W:
+                    case ConsoleKey.W: // if the user presses W, move the selected index up, but not below 0
                         if (selectedIndex > 0)
                         {
                             selectedIndex--;
@@ -60,7 +61,7 @@ namespace Rock_paper_scissors
                         isMenu = true;
                         return (selectedIndex, isMenu);
 
-                    case ConsoleKey.S:
+                    case ConsoleKey.S: // if the user presses S, move the selected index down, but not above the length of the menu array
                         if (selectedIndex < menuArray.Length - 1)
                         {
                             selectedIndex++;
@@ -68,7 +69,7 @@ namespace Rock_paper_scissors
                         isMenu = true;
                         return (selectedIndex, isMenu);
 
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.Enter: // if the user presses Enter, exit the menu and return the selected index and isMenu boolean to select the item in the menu
                         Console.Clear();
                         Console.ResetColor();
                         isMenu = false;
@@ -79,7 +80,7 @@ namespace Rock_paper_scissors
                 return (selectedIndex, isMenu);
             }
 
-            // this function makes above the menu pretty
+            // makes above the menu pretty
             void MenuAbove()
             // This function makes above the menu pretty
             {
@@ -93,7 +94,7 @@ namespace Rock_paper_scissors
                 Console.WriteLine();
             }
 
-            // this function makes below the menu pretty
+            // makes below the menu pretty
             void MenuBelow()
             // this function makes below the menu pretty
             {
@@ -103,7 +104,7 @@ namespace Rock_paper_scissors
                 Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             }
 
-            // this function allows the player to select a menu item from the string array and returns the selected item
+            // allows the player to select a menu item from the string array and returns the selected item
             string GetMenuSelection(string[] menuArray, int selectedIndex, bool isMenu)
             // actual menu navigation engine, returns the selected menu item from the string array
             {
@@ -112,18 +113,17 @@ namespace Rock_paper_scissors
                     MenuAbove();
                     DisplayMenu(menuArray, selectedIndex);
                     MenuBelow();
-                    (selectedIndex, isMenu) = MenuNav(selectedIndex, menuArray, isMenu);
+                    (selectedIndex, isMenu) = MenuNav(selectedIndex, menuArray, isMenu); // calls the MenuNav function to get the new selected index and isMenu boolean for menu navigation
                     Console.Clear();
                 }
                 while (isMenu);
-                return menuArray[selectedIndex];
+                return menuArray[selectedIndex]; // returns the selected menu item from the string array
             }
 
-            // this function allows the player to select their weapon choice from the rock paper scissors menu and returns the selection
-            string PlayerWeaponChoice(string[] rpsArray, int selectedIndex, bool isMenu)
             // allows the player to select their weapon choice from the rock paper scissors menu and returns the selection
+            string PlayerWeaponChoice(string[] rpsArray, int selectedIndex, bool isMenu)
             {
-                string rpsSelection = GetMenuSelection(rpsArray, selectedIndex, isMenu);
+                string rpsSelection = GetMenuSelection(rpsArray, selectedIndex, isMenu); // calls the GetMenuSelection function to get the selected weapon choice from the rock paper scissors menu
                 switch (rpsSelection)
                 {
                     case "Rock":
@@ -157,10 +157,10 @@ namespace Rock_paper_scissors
                         break;
 
                 }
-                return rpsSelection;
+                return rpsSelection; // returns the selected weapon choice from the rock paper scissors menu
             }
 
-            // this function allows the computer to select a weapon choice from the rock paper scissors menu and returns the selection
+            // allows the computer to select a weapon choice from the rock paper scissors menu and returns the selection
             string ComputerWeaponChoice(string[] rpsArray)
             {
                 // create a new instance of the Random class
@@ -171,7 +171,7 @@ namespace Rock_paper_scissors
                 return pcWeaponSelection;
             }
 
-            //put the whole rps single player game in to a function and call it from the main menu, including all the previous functions and code to compare the rps outcome and keep score
+            // has the whole rps single player game including all the previous functions and code to compare the rps outcome and keep score
             void SinglePlayerGame(string[] rpsArray, int selectedIndex, bool isMenu)
             {
 
@@ -219,6 +219,7 @@ namespace Rock_paper_scissors
                         Console.WriteLine();
                         Console.ResetColor();
                         Console.WriteLine();
+                        VictoryBeep();
                         Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
                         Console.WriteLine();
                         Console.WriteLine("Press any key to continue...");
@@ -254,8 +255,22 @@ namespace Rock_paper_scissors
 
             }
 
+            // can be used to play a victory beep sound when the player wins
+            void VictoryBeep()
+            {
+                    // Define notes for victory beeps
+                    int[] frequencies = { 494, 440, 494 }; // B, A, B
+                    int[] durations = { 400, 400, 800 }; // Durations in ms
+
+                // Loop through the notes, uses the same index for both arrays so both arrays must have the same number of things in them
+                for (int index = 0; index < frequencies.Length; index++) 
+                {
+                        Console.Beep(frequencies[index], durations[index]);
+                    }
+             }
+
                 // variables
-                string[] menuItems = { "Single Player", "Multiplayer (in development)", "Leaderboard (in development)", "Exit" };
+                string[] menuItems = { "Single Player", "Multiplayer", "Settings", "Exit" };
                 int selected = 0;
                 bool isMenuActive = false;
                 string[] rockPaperScissors = { "Rock", "Paper", "Scissors", "Exit" };
@@ -274,12 +289,12 @@ namespace Rock_paper_scissors
 
                     case "Multiplayer":
                         Console.Clear();
-                        Console.WriteLine("You selected Multiplayer");
+                        Console.WriteLine("You selected Multiplayer, this is still in development. Press any key to Exit");
                         break;
 
-                    case "Choice C":
+                    case "Settings":
                         Console.Clear();
-                        Console.WriteLine("You selected Leaderboard");
+                        Console.WriteLine("You selected Settings, this is still in development. Press any key to Exit");
                         break;
 
                     case "Exit":
