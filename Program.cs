@@ -10,12 +10,13 @@ namespace Rock_paper_scissors
         static void Main(string[] args)
         {
             // functions
+
             // this function changes the background and foreground colours of the selected menu item
             void ItemSelectColours()
             // this function changes the background and foreground colours of the selected menu item
             {
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Black;
             }
 
             // this function displays the menu items from a string array and selected index and highlights the selected item
@@ -52,9 +53,9 @@ namespace Rock_paper_scissors
                 switch (userInput)
                 {
                     case ConsoleKey.W:
-                        if (selectedIndex > 0) 
-                        { 
-                        selectedIndex--;
+                        if (selectedIndex > 0)
+                        {
+                            selectedIndex--;
                         }
                         isMenu = true;
                         return (selectedIndex, isMenu);
@@ -62,7 +63,7 @@ namespace Rock_paper_scissors
                     case ConsoleKey.S:
                         if (selectedIndex < menuArray.Length - 1)
                         {
-                        selectedIndex++;
+                            selectedIndex++;
                         }
                         isMenu = true;
                         return (selectedIndex, isMenu);
@@ -154,7 +155,7 @@ namespace Rock_paper_scissors
                         Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                         Console.ResetColor();
                         break;
-                   
+
                 }
                 return rpsSelection;
             }
@@ -166,131 +167,135 @@ namespace Rock_paper_scissors
                 Random rnd = new Random();
 
                 // computer picks and assigns weapon choice based on random number and string[] rockPaperScissors
-                string pcWeaponSelection = rpsArray[rnd.Next(0,3)];
+                string pcWeaponSelection = rpsArray[rnd.Next(0, 3)];
                 return pcWeaponSelection;
             }
 
-            // variables
-            string[] menuItems = new string [4] {"Single Player", "Multiplayer (in development)", "Leaderboard (in development)", "Exit"};
-            int selected = 0;
-            bool isMenuActive = false;
-            string[] rockPaperScissors = new string[4] { "Rock", "Paper", "Scissors", "Exit"};
-            string mainMenuSelection;
-            string weaponSelection;
-            string pcWeaponSelection;
-            bool runRPS;
-            int myScore = 0;
-            int pcScore = 0;
-
-
-            // config
-            Console.CursorVisible = false;
-
-            // main code
-            mainMenuSelection = GetMenuSelection(menuItems, selected, isMenuActive);
-            switch (mainMenuSelection)
+            //put the whole rps single player game in to a function and call it from the main menu, including all the previous functions and code to compare the rps outcome and keep score
+            void SinglePlayerGame(string[] rpsArray, int selectedIndex, bool isMenu)
             {
-                case "Single Player":
-                    runRPS = true;
-                    while (runRPS)
-                    { 
+
+                bool runRPS = true;
+                int myScore = 0;
+                int pcScore = 0;
+
+                while (runRPS)
+                {
                     Console.Clear();
 
-                    weaponSelection = PlayerWeaponChoice(rockPaperScissors, selected, isMenuActive);
+                    string weaponSelection = PlayerWeaponChoice(rpsArray, selectedIndex, isMenu);
 
+                    string pcWeaponSelection = ComputerWeaponChoice(rpsArray);
 
-                        pcWeaponSelection = ComputerWeaponChoice(rockPaperScissors);
-                        Console.WriteLine("Computer selected " + pcWeaponSelection);
-                        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    Console.WriteLine("Computer selected " + pcWeaponSelection);
+                    Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-                        // determine winner by comparing weaponSelection and pcWeaponSelection
-                        if (weaponSelection == pcWeaponSelection)
-                        {
-                            Console.WriteLine();
-                            ItemSelectColours();
-                            Console.WriteLine("~~~~~~~~~~~~~~");
-                            Console.WriteLine(" It's a tie!  ");
-                            Console.WriteLine("~~~~~~~~~~~~~~");
-                            Console.WriteLine();
-                            Console.ResetColor();
-                            Console.WriteLine();
-                            Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
-                            Console.WriteLine();
-                            Console.WriteLine("Press any key to continue...");
-                            Console.ReadKey();
-                        }
-                        else if ((weaponSelection == "Rock" && pcWeaponSelection == "Scissors") ||
-                                 (weaponSelection == "Paper" && pcWeaponSelection == "Rock") ||
-                                 (weaponSelection == "Scissors" && pcWeaponSelection == "Paper"))
-                        {
-                            Console.WriteLine();
-                            ItemSelectColours();
-                            Console.WriteLine("~~~~~~~~~~~~~~");
-                            Console.WriteLine("   You win!   ");
-                            Console.WriteLine("~~~~~~~~~~~~~~");
-                            myScore ++;
-                            Console.WriteLine();
-                            Console.ResetColor();
-                            Console.WriteLine();
-                            Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
-                            Console.WriteLine();
-                            Console.WriteLine("Press any key to continue...");
-                            Console.ReadKey();
-                        }
-                        else if (weaponSelection == "Exit")
-                        {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Thank you for playing. Press any key to exit");
-                            Console.ResetColor();
-                            runRPS = false;
-                            
-                        }
-                        else
-                        {
-                            Console.WriteLine();
-                            ItemSelectColours();
-                            Console.WriteLine("~~~~~~~~~~~~~~~~");
-                            Console.WriteLine(" Computer wins! ");
-                            Console.WriteLine("~~~~~~~~~~~~~~~~");
-                            pcScore++;
-                            Console.WriteLine();
-                            Console.ResetColor();
-                            Console.WriteLine();
-                            Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
-                            Console.WriteLine();
-                            Console.WriteLine("Press any key to continue...");
-                            Console.ReadKey();
+                    // determine winner by comparing weaponSelection and pcWeaponSelection
+                    if (weaponSelection == pcWeaponSelection)
+                    {
+                        Console.WriteLine();
+                        ItemSelectColours();
+                        Console.WriteLine("~~~~~~~~~~~~~~");
+                        Console.WriteLine(" It's a tie!  ");
+                        Console.WriteLine("~~~~~~~~~~~~~~");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                        Console.WriteLine();
+                        Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
+                        Console.WriteLine();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                    }
+                    else if ((weaponSelection == "Rock" && pcWeaponSelection == "Scissors") ||
+                             (weaponSelection == "Paper" && pcWeaponSelection == "Rock") ||
+                             (weaponSelection == "Scissors" && pcWeaponSelection == "Paper"))
+                    {
+                        Console.WriteLine();
+                        ItemSelectColours();
+                        Console.WriteLine("~~~~~~~~~~~~~~");
+                        Console.WriteLine("   You win!   ");
+                        Console.WriteLine("~~~~~~~~~~~~~~");
+                        myScore++;
+                        Console.WriteLine();
+                        Console.ResetColor();
+                        Console.WriteLine();
+                        Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
+                        Console.WriteLine();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                    }
+                    else if (weaponSelection == "Exit")
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Thank you for playing. Press any key to exit");
+                        Console.ResetColor();
+                        runRPS = false;
 
-                        }
-                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        ItemSelectColours();
+                        Console.WriteLine("~~~~~~~~~~~~~~~~");
+                        Console.WriteLine(" Computer wins! ");
+                        Console.WriteLine("~~~~~~~~~~~~~~~~");
+                        pcScore++;
+                        Console.WriteLine();
+                        Console.ResetColor();
+                        Console.WriteLine();
+                        Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
+                        Console.WriteLine();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
 
+                    }
+                }
 
-                    break;
-
-                case "Multiplayer":
-                    Console.Clear();
-                    Console.WriteLine("You selected Multiplayer");
-                    break;
-
-                case "Choice C":
-                    Console.Clear();
-                    Console.WriteLine("You selected Leaderboard");
-                    break;
-
-                case "Exit":
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Thank you for playing, press any key to exit");
-                    Console.ResetColor();
-                    break;
             }
 
-            
+                // variables
+                string[] menuItems = new string[4] { "Single Player", "Multiplayer (in development)", "Leaderboard (in development)", "Exit" };
+                int selected = 0;
+                bool isMenuActive = false;
+                string[] rockPaperScissors = new string[4] { "Rock", "Paper", "Scissors", "Exit" };
+                string mainMenuSelection;
+
+                // config
+                Console.CursorVisible = false;
+
+                // main code
+                mainMenuSelection = GetMenuSelection(menuItems, selected, isMenuActive);
+                switch (mainMenuSelection)
+                {
+                    case "Single Player":
+                    SinglePlayerGame(rockPaperScissors, selected, isMenuActive);
+                    break;
+
+                    case "Multiplayer":
+                        Console.Clear();
+                        Console.WriteLine("You selected Multiplayer");
+                        break;
+
+                    case "Choice C":
+                        Console.Clear();
+                        Console.WriteLine("You selected Leaderboard");
+                        break;
+
+                    case "Exit":
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Thank you for playing, press any key to exit");
+                        Console.ResetColor();
+                        break;
+                }
 
 
 
 
+
+
+            }
         }
     }
-}
+
