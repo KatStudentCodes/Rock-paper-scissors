@@ -255,10 +255,10 @@ namespace Rock_paper_scissors
             }
 
                 // variables
-                string[] menuItems = new string[4] { "Single Player", "Multiplayer (in development)", "Leaderboard (in development)", "Exit" };
+                string[] menuItems = { "Single Player", "Multiplayer (in development)", "Leaderboard (in development)", "Exit" };
                 int selected = 0;
                 bool isMenuActive = false;
-                string[] rockPaperScissors = new string[4] { "Rock", "Paper", "Scissors", "Exit" };
+                string[] rockPaperScissors = { "Rock", "Paper", "Scissors", "Exit" };
                 string mainMenuSelection;
 
                 // config
