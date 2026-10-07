@@ -179,6 +179,8 @@ namespace Rock_paper_scissors
             string weaponSelection;
             string pcWeaponSelection;
             bool runRPS;
+            int myScore = 0;
+            int pcScore = 0;
 
 
             // config
@@ -211,6 +213,9 @@ namespace Rock_paper_scissors
                             Console.WriteLine("~~~~~~~~~~~~~~");
                             Console.WriteLine();
                             Console.ResetColor();
+                            Console.WriteLine();
+                            Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
+                            Console.WriteLine();
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
                         }
@@ -223,8 +228,12 @@ namespace Rock_paper_scissors
                             Console.WriteLine("~~~~~~~~~~~~~~");
                             Console.WriteLine("   You win!   ");
                             Console.WriteLine("~~~~~~~~~~~~~~");
+                            myScore ++;
                             Console.WriteLine();
                             Console.ResetColor();
+                            Console.WriteLine();
+                            Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
+                            Console.WriteLine();
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
                         }
@@ -244,8 +253,12 @@ namespace Rock_paper_scissors
                             Console.WriteLine("~~~~~~~~~~~~~~~~");
                             Console.WriteLine(" Computer wins! ");
                             Console.WriteLine("~~~~~~~~~~~~~~~~");
+                            pcScore++;
                             Console.WriteLine();
                             Console.ResetColor();
+                            Console.WriteLine();
+                            Console.WriteLine("My score: " + myScore + " " + "Computer Score: " + pcScore);
+                            Console.WriteLine();
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
 
