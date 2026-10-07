@@ -1,6 +1,9 @@
 ﻿using System.Data;
 
 namespace Rock_paper_scissors
+
+// Developed in Visual Studio 2022, C# 12.0, .NET 8.0
+
 {
     internal class Program
     {
@@ -168,13 +171,14 @@ namespace Rock_paper_scissors
             }
 
             // variables
-            string[] menuItems = new string [4] {"Single Player", "Multiplayer", "Choice C", "Exit"};
+            string[] menuItems = new string [4] {"Single Player", "Multiplayer (in development)", "Leaderboard (in development)", "Exit"};
             int selected = 0;
             bool isMenuActive = false;
             string[] rockPaperScissors = new string[4] { "Rock", "Paper", "Scissors", "Exit"};
             string mainMenuSelection;
             string weaponSelection;
             string pcWeaponSelection;
+            bool runRPS;
 
 
             // config
@@ -185,13 +189,69 @@ namespace Rock_paper_scissors
             switch (mainMenuSelection)
             {
                 case "Single Player":
+                    runRPS = true;
+                    while (runRPS)
+                    { 
                     Console.Clear();
- 
+
                     weaponSelection = PlayerWeaponChoice(rockPaperScissors, selected, isMenuActive);
 
-                    pcWeaponSelection = ComputerWeaponChoice(rockPaperScissors);
-                    Console.WriteLine("Computer selected " + pcWeaponSelection);
-                    Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+                        pcWeaponSelection = ComputerWeaponChoice(rockPaperScissors);
+                        Console.WriteLine("Computer selected " + pcWeaponSelection);
+                        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+                        // determine winner by comparing weaponSelection and pcWeaponSelection
+                        if (weaponSelection == pcWeaponSelection)
+                        {
+                            Console.WriteLine();
+                            ItemSelectColours();
+                            Console.WriteLine("~~~~~~~~~~~~~~");
+                            Console.WriteLine(" It's a tie!  ");
+                            Console.WriteLine("~~~~~~~~~~~~~~");
+                            Console.WriteLine();
+                            Console.ResetColor();
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                        }
+                        else if ((weaponSelection == "Rock" && pcWeaponSelection == "Scissors") ||
+                                 (weaponSelection == "Paper" && pcWeaponSelection == "Rock") ||
+                                 (weaponSelection == "Scissors" && pcWeaponSelection == "Paper"))
+                        {
+                            Console.WriteLine();
+                            ItemSelectColours();
+                            Console.WriteLine("~~~~~~~~~~~~~~");
+                            Console.WriteLine("   You win!   ");
+                            Console.WriteLine("~~~~~~~~~~~~~~");
+                            Console.WriteLine();
+                            Console.ResetColor();
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                        }
+                        else if (weaponSelection == "Exit")
+                        {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Thank you for playing. Press any key to exit");
+                            Console.ResetColor();
+                            runRPS = false;
+                            
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            ItemSelectColours();
+                            Console.WriteLine("~~~~~~~~~~~~~~~~");
+                            Console.WriteLine(" Computer wins! ");
+                            Console.WriteLine("~~~~~~~~~~~~~~~~");
+                            Console.WriteLine();
+                            Console.ResetColor();
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+
+                        }
+                        }
+
 
                     break;
 
@@ -202,7 +262,7 @@ namespace Rock_paper_scissors
 
                 case "Choice C":
                     Console.Clear();
-                    Console.WriteLine("You selected Choice C");
+                    Console.WriteLine("You selected Leaderboard");
                     break;
 
                 case "Exit":
